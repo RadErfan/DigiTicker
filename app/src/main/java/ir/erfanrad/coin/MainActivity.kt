@@ -1,5 +1,7 @@
 package ir.erfanrad.coin
 
+import android.content.IntentFilter
+import android.net.ConnectivityManager
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
@@ -38,12 +40,18 @@ import ir.erfanrad.coin.presentation.main.state.CryptoState
 import ir.erfanrad.coin.presentation.main.state.UiEvent
 import ir.erfanrad.coin.presentation.screen.CryptoPriceScreen
 import ir.erfanrad.coin.ui.theme.CoinTheme
+import ir.erfanrad.coin.util.InternetReceiver
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.collectLatest
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private lateinit var receiver:InternetReceiver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        receiver = InternetReceiver()
+        val filter = IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+        registerReceiver(receiver , filter)
         enableEdgeToEdge()
         setContent {
             CoinTheme {
@@ -53,6 +61,12 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        unregisterReceiver(receiver)
     }
 }
 

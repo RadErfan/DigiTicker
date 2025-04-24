@@ -56,6 +56,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import ir.erfanrad.coin.R
 import ir.erfanrad.coin.presentation.ViewModel.CryptoViewModel
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.runBlocking
 
 
 @Composable
@@ -532,4 +539,5 @@ fun ChangeRow(teagirat: String, percent: Float) {
         )
     }
 }
+
 
